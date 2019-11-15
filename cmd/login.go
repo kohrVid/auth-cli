@@ -18,6 +18,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/kohrVid/auth/cli/sessions"
 	"github.com/spf13/cobra"
 )
 
@@ -32,6 +33,14 @@ var loginCmd = &cobra.Command{
 		fmt.Scanf("%s", &username)
 		fmt.Print("Password: ")
 		fmt.Scanf("%s", &password)
+
+		sessionParams := map[string]string{
+			"username": username,
+			"password": password,
+		}
+
+		resp := sessions.Login(sessionParams)
+		fmt.Println(resp)
 	},
 }
 

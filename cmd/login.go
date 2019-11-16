@@ -17,9 +17,12 @@ package cmd
 
 import (
 	"fmt"
+	"log"
+	"syscall"
 
 	"github.com/kohrVid/auth/cli/sessions"
 	"github.com/spf13/cobra"
+	"golang.org/x/crypto/ssh/terminal"
 )
 
 // loginCmd represents the login command
@@ -28,15 +31,19 @@ var loginCmd = &cobra.Command{
 	Short: "Log into the kohrvid auth service",
 	Long:  `Log into the kohrvid auth service`,
 	Run: func(cmd *cobra.Command, args []string) {
-		var username, password string
+		var username string
 		fmt.Print("Please enter your login details\nUsername: ")
 		fmt.Scanf("%s", &username)
 		fmt.Print("Password: ")
-		fmt.Scanf("%s", &password)
+
+		password, err := terminal.ReadPassword(int(syscall.Stdin))
+		if err != nil {
+			log.Fatalf("unable to read password: %v", err)
+		}
 
 		sessionParams := map[string]string{
 			"username": username,
-			"password": password,
+			"password": string(password),
 		}
 
 		resp := sessions.Login(sessionParams)

@@ -6,7 +6,7 @@ import (
 
 	"github.com/golang/mock/gomock"
 	pbmock "github.com/kohrVid/auth/auth-api/mock_pb"
-	"github.com/kohrVid/auth/auth-api/pb"
+	"github.com/kohrVid/auth/proto"
 )
 
 func TestValidateSessionParams(t *testing.T) {
@@ -84,7 +84,7 @@ func TestSessionAuth(t *testing.T) {
 	mockAuthClient.EXPECT().CredentialCheck(
 		gomock.Any(),
 		gomock.Any(),
-	).Return(&pb.AuthenticationResponse{Result: "OK"}, nil)
+	).Return(&proto.AuthenticationResponse{Result: "OK"}, nil)
 
 	sessionParams := map[string]string{
 		"username": "Magda",

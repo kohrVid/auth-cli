@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/kohrVid/auth/auth-api/pb"
+	"github.com/kohrVid/auth/proto"
 	log "github.com/sirupsen/logrus"
 	grpc "google.golang.org/grpc"
 )
@@ -22,7 +22,7 @@ func Login(sessionParams map[string]string) string {
 		log.Fatalf("Dial failed: %v", err)
 	}
 
-	authClient := pb.NewAuthenticationServiceClient(conn)
+	authClient := proto.NewAuthenticationServiceClient(conn)
 	r := sessionAuth(authClient, sessionParams)
 	return r.Result
 }
@@ -45,13 +45,13 @@ func validateSessionParams(sessionParams map[string]string) error {
 	}
 }
 
-func sessionAuth(authClient pb.AuthenticationServiceClient, sp map[string]string) *pb.AuthenticationResponse {
+func sessionAuth(authClient proto.AuthenticationServiceClient, sp map[string]string) *proto.AuthenticationResponse {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
 	r, err := authClient.CredentialCheck(
 		ctx,
-		&pb.AuthenticationRequest{
+		&proto.AuthenticationRequest{
 			Username: sp["username"],
 			Password: sp["password"],
 		},

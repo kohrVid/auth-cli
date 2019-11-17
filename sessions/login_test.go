@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
-	pbmock "github.com/kohrVid/auth/auth-api/mock_pb"
 	"github.com/kohrVid/auth/proto"
+	pbmock "github.com/kohrVid/auth/proto/mock_proto"
 )
 
 func TestValidateSessionParams(t *testing.T) {

@@ -4,22 +4,35 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"path/filepath"
 	"time"
 
+	certs "github.com/kohrVid/auth/certs/helpers"
 	"github.com/kohrVid/auth/proto"
 	log "github.com/sirupsen/logrus"
 	grpc "google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 func Login(sessionParams map[string]string) string {
+	certPath := filepath.Join("..", "certs")
+	certFile, _ := certs.TlsCerts(certPath, "client.crt", "")
 	err := validateSessionParams(sessionParams)
 	if err != nil {
 		log.Fatalf("invalid credentials: %v", err)
 	}
 
-	conn, err := grpc.Dial("localhost:9999", grpc.WithInsecure())
+	creds, err := credentials.NewClientTLSFromFile(certFile, "")
 	if err != nil {
-		log.Fatalf("Dial failed: %v", err)
+		log.Fatalf(
+			"unable to construct TLS credentials from certificate: %v",
+			err,
+		)
+	}
+
+	conn, err := grpc.Dial("localhost:9999", grpc.WithTransportCredentials(creds))
+	if err != nil {
+		log.Fatalf("dial failed: %v", err)
 	}
 
 	authClient := proto.NewAuthenticationServiceClient(conn)

@@ -47,7 +47,7 @@ var loginCmd = &cobra.Command{
 		}
 
 		resp := sessions.Login(sessionParams)
-		fmt.Println(resp)
+		fmt.Printf("\n%v\n", resp)
 	},
 }
 

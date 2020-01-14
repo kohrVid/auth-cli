@@ -20,7 +20,7 @@ import (
 	"log"
 	"syscall"
 
-	"github.com/kohrVid/auth/cli/sessions"
+	"github.com/kohrVid/auth-cli/sessions"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/ssh/terminal"
 )

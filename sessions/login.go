@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"time"
 
-	certs "github.com/kohrVid/auth/certs/helpers"
-	"github.com/kohrVid/auth/proto"
+	certs "github.com/kohrVid/auth-certs/helpers"
+	proto "github.com/kohrVid/auth-proto"
 	log "github.com/sirupsen/logrus"
 	grpc "google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"

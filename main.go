@@ -15,8 +15,8 @@ limitations under the License.
 */
 package main
 
-import "github.com/kohrVid/auth/cli/cmd"
+import "github.com/kohrVid/auth-cli/cmd"
 
 func main() {
-  cmd.Execute()
+	cmd.Execute()
 }
